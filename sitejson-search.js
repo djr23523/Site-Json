@@ -7,15 +7,15 @@ import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
 
 /**
- * `site-json`
+ * `sitejson-search`
  * 
  * @demo index.html
- * @element site-json
+ * @element sitejson-search
  */
-export class siteJson extends DDDSuper(I18NMixin(LitElement)) {
+export class siteJsonSearch extends DDDSuper(I18NMixin(LitElement)) {
 
   static get tag() {
-    return "site-json";
+    return "sitejson-search";
   }
 
   constructor() {
@@ -29,7 +29,7 @@ export class siteJson extends DDDSuper(I18NMixin(LitElement)) {
     this.registerLocalization({
       context: this,
       localesPath:
-        new URL("./locales/site-json.ar.json", import.meta.url).href +
+        new URL("./locales/sitejson-search.ar.json", import.meta.url).href +
         "/../",
       locales: ["ar", "es", "hi", "zh"],
     });
@@ -58,7 +58,7 @@ export class siteJson extends DDDSuper(I18NMixin(LitElement)) {
         padding: var(--ddd-spacing-4);
       }
       h3 span {
-        font-size: var(--site-json-label-font-size, var(--ddd-font-size-s));
+        font-size: var(--sitejson-search-label-font-size, var(--ddd-font-size-s));
       }
     `];
   }
@@ -66,10 +66,24 @@ export class siteJson extends DDDSuper(I18NMixin(LitElement)) {
   // Lit render the HTML
   render() {
     return html`
-<div class="wrapper">
-  <h3><span>${this.t.title}:</span> ${this.title}</h3>
-  <slot></slot>
-</div>`;
+    <h2>${this.title}</h2>
+    <details open>
+      <summary>Search inputs</summary>
+      <div>
+        <input id="input" placeholder="Search NASA images" @input="${this.inputChanged}" />
+      </div>
+    </details>
+    <div class="results">
+    
+      ${this.items.map((item, index) => html`
+      <nasa-image
+        source="${item.links[0].href}"
+        title="${item.data[0].title}" 
+        seccreator="${item.data[0].secondary_creator}"
+      ></nasa-image>
+      `)}
+    </div>
+    `;
   }
 
   /**
@@ -81,4 +95,4 @@ export class siteJson extends DDDSuper(I18NMixin(LitElement)) {
   }
 }
 
-globalThis.customElements.define(siteJson.tag, siteJson);
+globalThis.customElements.define(siteJsonSearch.tag, siteJsonSearch);
