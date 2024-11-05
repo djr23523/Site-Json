@@ -1,12 +1,14 @@
 import { LitElement, html, css } from "lit";
 
-export class NasaImage extends LitElement {
+export class SitejsonImage extends LitElement {
 
   constructor() {
     super();
     this.title = '';
     this.source = '';
-    this.seccreator='No Secondary creator';
+    this.lastupdated='';
+    this.description='';
+    this.additional='';
     this.alt="";
   }
 
@@ -14,7 +16,9 @@ export class NasaImage extends LitElement {
     return {
         source: { type: String },
         title: { type: String },
-        seccreator: { type : String },
+        lastupdated: { type : String },
+        description: { type : String },
+        additional: {type : String},
         alt: { type: String},
     };
   }
@@ -67,14 +71,16 @@ export class NasaImage extends LitElement {
     <a href="${this.source}" target="_blank">
     <div class="image">
         <img src="${this.source}" alt="${this.alt}"/>
+        <div>${this.lastupdated}</div>
+        <div>${this.description}</div>
         <div class="title">${this.title}</div>
-        <div class ="sc">${this.seccreator}</div>
+        
     </div>
     </a>
     `;
   }
   static get tag() {
-    return "nasa-image";
+    return "sitejson-image";
   }
 }
-customElements.define(NasaImage.tag, NasaImage);
+customElements.define(SitejsonImage.tag, SitejsonImage);

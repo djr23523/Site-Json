@@ -27,6 +27,7 @@ export class siteJsonSearch extends DDDSuper(I18NMixin(LitElement)) {
       title: "Title",
     };
     this.loading = false;
+    this.siteName='sitejson';
     this.items = [];
     this.value = null;
     this.registerLocalization({
@@ -44,6 +45,7 @@ export class siteJsonSearch extends DDDSuper(I18NMixin(LitElement)) {
       ...super.properties,
       title: { type: String },
       loading: { type: Boolean, reflect: true },
+      siteName: {type : String},
       items: { type: Array, },
       value: { type: String },
     };
@@ -76,7 +78,7 @@ export class siteJsonSearch extends DDDSuper(I18NMixin(LitElement)) {
     <details open>
       <summary>Search inputs</summary>
       <div>
-        <input id="input" placeholder="Search NASA images" @input="${this.inputChanged}" />
+        <input id="input" placeholder="Search ${this.siteName} images" @input="${this.inputChanged}" />
       </div>
     </details>
     <div class="results">
