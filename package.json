@@ -1,7 +1,7 @@
 {
-    "name": "@yourOrganization/site-json",
+    "name": "@yourOrganization/sitejson-search",
     "version": "0.0.0",
-    "description": "Webcomponent site-json following hax / open-wc recommendations",
+    "description": "Webcomponent sitejson-search following hax / open-wc recommendations",
     "license": "Apache-2.0",
     "author": {
         "name": "djr23523"
@@ -13,11 +13,11 @@
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/djr23523/site-json"
+        "url": "https://github.com/djr23523/sitejson-search"
     },
     "type": "module",
-    "main": "site-json.js",
-    "module": "site-json.js",
+    "main": "sitejson-search.js",
+    "module": "sitejson-search.js",
     "scripts": {
         "start": "web-dev-server",
         "build": "rimraf public && rollup -c rollup.config.js && npm run analyze",

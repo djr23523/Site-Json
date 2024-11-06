@@ -1,13 +1,13 @@
 import { html, fixture, expect } from '@open-wc/testing';
-import "../site-json.js";
+import "../sitejson-search.js";
 
 describe("siteJson test", () => {
   let element;
   beforeEach(async () => {
     element = await fixture(html`
-      <site-json
+      <sitejson-search
         title="title"
-      ></site-json>
+      ></sitejson-search>
     `);
   });
 
