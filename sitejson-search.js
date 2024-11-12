@@ -75,12 +75,10 @@ export class siteJsonSearch extends DDDSuper(I18NMixin(LitElement)) {
   render() {
     return html`
     <h2>${this.title}</h2>
-    <details open>
-      <summary>Search inputs</summary>
+    
       <div>
         <input id="input" placeholder="Search ${this.siteName} images" @input="${this.inputChanged}" />
       </div>
-    </details>
     <div class="results">
     
       ${this.items.map((item, index) => html`
@@ -100,7 +98,12 @@ export class siteJsonSearch extends DDDSuper(I18NMixin(LitElement)) {
   updated(changedProperties) {
     // see if value changes from user input and is not empty
     if (changedProperties.has('value') && this.value) {
-      this.updateResults(this.value);
+      if(this.value.has('site.json')){
+        this.updateResults(this.value);
+      }
+      else if(!this.value.has('site.json')){
+        this.value+="/site.json"
+      }
     }
     else if (changedProperties.has('value') && !this.value) {
       this.items = [];
@@ -113,7 +116,7 @@ export class siteJsonSearch extends DDDSuper(I18NMixin(LitElement)) {
 
   updateResults(value) {
     this.loading = true;
-    fetch(`https://images-api.nasa.gov/search?media_type=image&q=${value}`).then(d => d.ok ? d.json(): {}).then(data => {
+    fetch(`${value}`).then(d => d.ok ? d.json(): {}).then(data => {
       if (data.collection) {
         this.items = [];
         this.items = data.collection.items;
