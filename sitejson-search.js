@@ -75,17 +75,20 @@ export class siteJsonSearch extends DDDSuper(I18NMixin(LitElement)) {
   render() {
     return html`
     <h2>${this.title}</h2>
-    
+      <div>
+        Site
+      </div>
       <div>
         <input id="input" placeholder="Search ${this.siteName} images" @input="${this.inputChanged}" />
       </div>
+      <button>Analyze</button>
     <div class="results">
+      
     
       ${this.items.map((item, index) => html`
       <sitejson-image
         source="${item.links[0].href}"
-        title="${item.data[0].title}" 
-        seccreator="${item.data[0].secondary_creator}"
+        
       ></sitejson-image>
       `)}
     </div>
@@ -116,7 +119,22 @@ export class siteJsonSearch extends DDDSuper(I18NMixin(LitElement)) {
 
   updateResults(value) {
     this.loading = true;
-    fetch(`${value}`).then(d => d.ok ? d.json(): {}).then(data => {
+  fetch(`${this.value}site.json`)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then(data => {
+    this.items = [];
+    this.items = data.collection.items;
+    this.loading = false;
+  })
+  .catch(error => {
+    console.error('There was a problem with the fetch operation:', error);
+  });
+    fetch(`https://haxtheweb.org/site.json`).then(d => d.ok ? d.json(): {}).then(data => {
       if (data.collection) {
         this.items = [];
         this.items = data.collection.items;
