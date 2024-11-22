@@ -17,6 +17,8 @@ export class SitejsonDetails extends LitElement {
 
   static get properties() {
     return {
+        name: {type:String},
+
         source: { type: String },
         title: { type: String },
         lastupdated: { type : String },
@@ -35,6 +37,15 @@ export class SitejsonDetails extends LitElement {
     background-color:var(--ddd-theme-default-disabled);
     margin:var(--ddd-spacing-m-4);
     padding:var(--ddd-spacing-p-5);
+    }
+    .image {
+    display: inline-block;
+    }
+
+    .image div {
+    max-width: 200px;
+    font-size: 16px;
+    font-weight: bold;
     }
 
 
@@ -73,7 +84,6 @@ export class SitejsonDetails extends LitElement {
     return html`
     <a href="${this.source}" target="_blank">
     <div class="image">
-        <img src="${this.source}" alt="${this.alt}"/>
         <div>${this.lastupdated}</div>
         <div>${this.description}</div>
         <div class="title">${this.title}</div>

@@ -8,8 +8,10 @@ export class SitejsonImage extends LitElement {
     this.source = '';
     this.lastupdated='';
     this.description='';
+    this.pagelink='';
     this.additional='';
     this.alt="";
+    this.readtime='';
   }
 
   static get properties() {
@@ -19,6 +21,8 @@ export class SitejsonImage extends LitElement {
         lastupdated: { type : String },
         description: { type : String },
         additional: {type : String},
+        pagelink: {type : String},
+        readtime: {type:String},
         alt: { type: String},
     };
   }
@@ -74,6 +78,8 @@ export class SitejsonImage extends LitElement {
         <div>${this.lastupdated}</div>
         <div>${this.description}</div>
         <div class="title">${this.title}</div>
+        <div>${this.pagelink}</div>
+        <div>${this.readtime}</div>
         
     </div>
     </a>

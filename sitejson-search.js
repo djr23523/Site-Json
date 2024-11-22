@@ -5,7 +5,8 @@
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
-
+import "./sitejson-details.js";
+import "./sitejson-card.js";
 /**
  * `sitejson-search`
  * 
@@ -30,6 +31,7 @@ export class siteJsonSearch extends DDDSuper(I18NMixin(LitElement)) {
     this.siteName='sitejson';
     this.items = [];
     this.value = null;
+    this.data="";
     this.registerLocalization({
       context: this,
       localesPath:
@@ -68,6 +70,13 @@ export class siteJsonSearch extends DDDSuper(I18NMixin(LitElement)) {
       h3 span {
         font-size: var(--sitejson-search-label-font-size, var(--ddd-font-size-s));
       }
+      .results{
+        visibility: visible;
+        height: 100%;
+        opacity: 1;
+        transition-delay: .5s;
+        transition: .5s all ease-in-out;
+      }
     `];
   }
 
@@ -79,17 +88,17 @@ export class siteJsonSearch extends DDDSuper(I18NMixin(LitElement)) {
         Site
       </div>
       <div>
-        <input id="input" placeholder="Search ${this.siteName} images" @input="${this.inputChanged}" />
+        <input id="input" placeholder="Enter https://haxtheweb.org" @input="${this.inputChanged}" />
       </div>
-      <button>Analyze</button>
+      <button @click=${this.updateResults}>Analyze</button>
     <div class="results">
-      
+      <sitejson-details  ></sitejson-details>
     
-      ${this.items.map((item, index) => html`
-      <sitejson-image
-        source="${item.links[0].href}"
-        
-      ></sitejson-image>
+      ${this.items.map((item,) => html`
+      <sitejson-card
+        title=${item.title}
+        description=${item.description}
+      ></sitejson-card>
       `)}
     </div>
     `;
@@ -119,7 +128,7 @@ export class siteJsonSearch extends DDDSuper(I18NMixin(LitElement)) {
 
   updateResults(value) {
     this.loading = true;
-  fetch(`${this.value}site.json`)
+  fetch(`${this.value}/site.json`)
   .then(response => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -128,19 +137,17 @@ export class siteJsonSearch extends DDDSuper(I18NMixin(LitElement)) {
   })
   .then(data => {
     this.items = [];
-    this.items = data.collection.items;
+    this.items = data.items;
     this.loading = false;
+    this.data=null;
+    this.data=data;
   })
   .catch(error => {
+    this.items=[];
+    this.loading=false;
+    this.data=null;
     console.error('There was a problem with the fetch operation:', error);
   });
-    fetch(`https://haxtheweb.org/site.json`).then(d => d.ok ? d.json(): {}).then(data => {
-      if (data.collection) {
-        this.items = [];
-        this.items = data.collection.items;
-        this.loading = false;
-      }  
-    });
   }
   /**
    * haxProperties integration via file reference
